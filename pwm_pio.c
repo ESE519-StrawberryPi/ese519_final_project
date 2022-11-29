@@ -29,6 +29,7 @@ void pio_pwm_set_level(PIO pio, uint sm, uint32_t level) {
 
 int main() {
     stdio_init_all();
+    sleep_ms(1000);
 
     set_sys_clock_khz(22000, true);
 
@@ -39,13 +40,13 @@ int main() {
     printf("Loaded program at %d\n", offset);
 
     pwm_program_init(pio, sm, offset, AUDIO_PIN);
-    pio_pwm_set_period(pio, sm, (1u << 8) - 1);
+    pio_pwm_set_period(pio, sm, (1u << 16) - 1);
 
     int position = 0;
     while (true) {
         if (position < (DATA_LENGTH << 3) - 1){
             uint8_t chant=DATA[position >> 3];
-            pio_pwm_set_level(pio0,sm, DATA[position >> 3]);
+            pio_pwm_set_level(pio0,sm, chant * chant);
             position++;
             printf("\n%d",DATA[position>>3]);
         }
