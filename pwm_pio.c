@@ -38,7 +38,7 @@ int main() {
     // uint cycles=clock_get_hz(clk_sys)/(freq*clk_div);
     // uint clk_div = 8;
     uint32_t period = 250;
-    uint32_t clk = 44000;
+    uint32_t clk = 66000;
     set_sys_clock_khz(clk, true);
 
     // todo get free sm
@@ -66,7 +66,7 @@ int main() {
             pio_pwm_set_level(pio0,sm, 0);
             
             printf("\nReset the position");
-            sleep_ms(3000);
+            // sleep_ms(3000);
             printf("\nRestart again");
         }
     }
