@@ -38,6 +38,8 @@ int main() {
     // uint cycles=clock_get_hz(clk_sys)/(freq*clk_div);
     // uint clk_div = 8;
     uint32_t period = 250;
+
+    // Fine tuning the clock so that the frequency of the music is normal
     uint32_t clk = 66000;
     set_sys_clock_khz(clk, true);
 
