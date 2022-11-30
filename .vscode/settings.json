@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "pwm.pio.h": "c"
+        "pwm.pio.h": "c",
+        "audio.h": "c"
     }
 }
