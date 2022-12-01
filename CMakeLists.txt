@@ -9,9 +9,8 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
-add_executable(pwm_pio piano.c)
+add_executable(pwm_pio save.c)
 
-pico_enable_stdio_usb(pwm_pio 1)
 pico_enable_stdio_usb(pwm_pio 1)
 
 pico_generate_pio_header(pwm_pio ${CMAKE_CURRENT_LIST_DIR}/pwm.pio)
@@ -24,6 +23,7 @@ target_link_libraries(
     hardware_timer
     hardware_clocks
     hardware_pwm
+    hardware_flash
 )
 # example_auto_set_url(audio)
 pico_add_extra_outputs(pwm_pio)

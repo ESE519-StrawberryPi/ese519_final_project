@@ -78,7 +78,6 @@ int main() {
     uint32_t clk = 66000;
     set_sys_clock_khz(clk, true);
 
-    // todo get free sm
     PIO pio = pio0;
     uint sm = 0;
     uint offset = pio_add_program(pio, &pwm_program);
