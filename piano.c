@@ -32,7 +32,7 @@ void pio_pwm_set_level(PIO pio, uint sm, uint32_t level) {
     pio_sm_put_blocking(pio, sm, level);
 }
 
-// Play function
+// Play function, play only single note
 void play(int note, PIO pio, uint sm){
     int position = 0;
     switch(note){
