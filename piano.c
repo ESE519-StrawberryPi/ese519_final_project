@@ -45,7 +45,7 @@ void play(int note, PIO pio, uint sm){
             }
             pio_pwm_set_level(pio0, sm, 0);
             break;
-        case 'b':
+        case 's':
             position = 0;
             printf("\nPlaying song 2");
             while (position < (DATA_LENGTH_2/2 ) - 1){
@@ -54,7 +54,7 @@ void play(int note, PIO pio, uint sm){
             }
             pio_pwm_set_level(pio0, sm, 0);
             break;
-        case 'c':
+        case 'd':
             position = 0;
             printf("\nPlaying song 3");
             while (position < (DATA_LENGTH_3 /2) - 1){
