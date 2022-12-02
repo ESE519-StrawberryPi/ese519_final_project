@@ -23,14 +23,10 @@ void print_buf(const uint8_t *buf, size_t len) {
 
 
 
-
-
-
-
  
 int main() {
     stdio_init_all();
-    sleep_ms(5000);
+    sleep_ms(10000);
     uint8_t random_data[FLASH_PAGE_SIZE];
     for (int i = 0; i < FLASH_PAGE_SIZE; ++i)
         random_data[i] = rand() >> 16;
@@ -50,17 +46,17 @@ int main() {
     ints = save_and_disable_interrupts();
     flash_range_program(FLASH_TARGET_OFFSET, random_data, FLASH_PAGE_SIZE);
     restore_interrupts(ints);
-    // printf("Done. Read back target region:\n");
-    // print_buf(flash_target_contents, FLASH_PAGE_SIZE);
+    printf("Done. Read back target region:\n");
+    print_buf(flash_target_contents, FLASH_PAGE_SIZE);
  
-    // bool mismatch = false;
-    // for (int i = 0; i < FLASH_PAGE_SIZE; ++i) {
-    //     if (random_data[i] != flash_target_contents[i])
-    //         mismatch = true;
-    // }
-    // if (mismatch)
-    //     printf("Programming failed!\n");
-    // else
-    //     printf("Programming successful!\n");
+    bool mismatch = false;
+    for (int i = 0; i < FLASH_PAGE_SIZE; ++i) {
+        if (random_data[i] != flash_target_contents[i])
+            mismatch = true;
+    }
+    if (mismatch)
+        printf("Programming failed!\n");
+    else
+        printf("Programming successful!\n");
 
 }

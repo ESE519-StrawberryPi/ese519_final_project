@@ -4,6 +4,7 @@
         "pwm.pio.h": "c",
         "audio.h": "c",
         "sync.h": "c",
-        "flash.h": "c"
+        "flash.h": "c",
+        "clocks.h": "c"
     }
 }
