@@ -213,7 +213,7 @@ int main(){
     printf("%s\n", charArr);
     printf("Relaod Successfully.\n");
 
-    char test_arr[]= {'a','a','b','c','a','a','b','c','a','a','b','c','\0'};
+    char test_arr[]= {'b','a','b','c','a','a','b','c','a','a','b','c','\0'};
     
     // size_t test_arr_length=sizeof(test_arr)/sizeof(test_arr[0]);
     // char *char_p=malloc(test_arr_length);
