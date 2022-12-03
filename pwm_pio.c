@@ -12,7 +12,7 @@
 #include "notes_3.h"
 #include "hardware/clocks.h"
 
-#define AUDIO_PIN 1
+#define MUSIC_AUDIO_PIN 1
 
 // Write `period` to the input shift register
 void pio_pwm_set_period(PIO pio, uint sm, uint32_t period) {
@@ -27,6 +27,55 @@ void pio_pwm_set_period(PIO pio, uint sm, uint32_t period) {
 void pio_pwm_set_level(PIO pio, uint sm, uint32_t level) {
     pio_sm_put_blocking(pio, sm, level);
 }
+
+
+// play the given music data
+void play_mode(uint8_t *data, int dataLen){
+    // uint cycles=clock_get_hz(clk_sys)/(freq*clk_div);
+    // uint clk_div = 8;
+    uint32_t period = 250;
+
+    // Fine-tune the clock so that the frequency of the music is normal.
+    uint32_t clk = 66000;
+    set_sys_clock_khz(clk, true);
+
+    // Set up the pio
+    PIO pio = pio0;
+    uint sm = 0;
+    uint offset = pio_add_program(pio, &pwm_program);
+    printf("\nLoaded program at %d", offset);
+
+    pwm_program_init(pio, sm, offset, MUSIC_AUDIO_PIN);
+    pio_pwm_set_period(pio, sm, period);
+
+    int position = 0;
+    int loopNum = 0;
+    while (true) {
+        loopNum++;
+        if(loopNum > 3){
+            printf("\n If you want to exit the loop, please press 'q'.");
+            char c = getchar_timeout_us(2 * 1000);
+            if(c == 'q'){
+                break;
+            }else{
+                loopNum = 0;
+            }
+        }
+
+        // if (position < (DATA_LENGTH << 3) - 1){
+        if ( position < (dataLen << 2)-1){
+            pio_pwm_set_level(pio0, sm, data[position>>2]);
+            position++;
+        }else{
+            position = 0;
+            pio_pwm_set_level(pio0,sm, 0);
+            printf("\nReset the position");
+            printf("\nRestart again");
+        }
+    }
+}
+
+
 
 int main() {
     stdio_init_all();
@@ -49,7 +98,7 @@ int main() {
     uint offset = pio_add_program(pio, &pwm_program);
     printf("Loaded program at %d\n", offset);
 
-    pwm_program_init(pio, sm, offset,AUDIO_PIN);
+    pwm_program_init(pio, sm, offset,MUSIC_AUDIO_PIN);
     pio_pwm_set_period(pio, sm, period);
 
     int position = 0;

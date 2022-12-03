@@ -8,7 +8,7 @@ project(final_project C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 pico_sdk_init()
 
-add_executable(pwm_pio audio_generator.c)
+add_executable(pwm_pio audio_generator.c main.c replayMode.c)
 
 pico_enable_stdio_usb(pwm_pio 1)
 
