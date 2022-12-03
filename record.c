@@ -102,7 +102,7 @@ const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGE
 // }
 void print_buf(const uint8_t *buf, size_t len) {
     for (size_t i = 0; i < len; ++i) {
-        printf("%02x", buf[i]);
+        printf("%c", buf[i]);
         if (i % 16 == 15)
             printf("\n");
         else
@@ -115,20 +115,26 @@ bool save(char *charArr){
 
     // Plus 1 here is to take the terminator into account.
     size_t len = strlen(charArr) + 1;
-    printf("Len: %d\n", len);
+    // printf("Len: %d\n", len);
+    char* temp= (char *) malloc(len * sizeof(char));
+    strcpy(temp, charArr);
+    temp[len] = '\0';
+    printf("Copied Array:\n");
+    printf("%s\n",temp);
 
     // Trsanfer the length of data into 
     // the interger multiple of the size of the sector.
     size_t SPACE_SIZE = ((len / FLASH_SECTOR_SIZE) + 1 ) * FLASH_SECTOR_SIZE;
+    // size_t SPACE_SIZE=len;
 
     printf("spaceSize: %d\n", SPACE_SIZE);
 
-    charArr=(char*) realloc(charArr, SPACE_SIZE);
+    temp=(char*) realloc(temp, 1400);
 
     printf("realloc successfully.\n");
 
     
-    print_buf(charArr, len);
+    print_buf(temp, len);
     // Erase the flash memory.
     // Before erasing, diasable the interrupts and save the the breakpoint.
     // Recover the breakpoint and enable the interrupts after erasing.
@@ -136,31 +142,31 @@ bool save(char *charArr){
     flash_range_erase(FLASH_TARGET_OFFSET, SPACE_SIZE);
     restore_interrupts(ints);
     
-    printf("\nErase successfully.");
+    printf("\nErase successfully.\n");
 
     // print_buf(flash_target_contents, SPACE_SIZE);
 
-    printf("\nData printed.\n");
+    // printf("\nData printed.\n");
 
     // Write the data char array into the flash memory.
     // Similar to erase.
     ints = save_and_disable_interrupts();
-    flash_range_program(FLASH_TARGET_OFFSET, (uint8_t*)charArr, SPACE_SIZE);
+    flash_range_program(FLASH_TARGET_OFFSET, (uint8_t*)temp, SPACE_SIZE);
     restore_interrupts(ints);
-    printf("Write Successfully.");
-    // print_buf(flash_target_contents, FLASH_PAGE_SIZE);
+    printf("Write Successfully.\n");
+    print_buf(flash_target_contents, len);
 
     // Check if stored data is correct
     // return false is mismatch and erease the data written.
     bool mismatch = false;
-    for (int i = 0; i < len; ++i) {
+    for (int i = 0; i < len; i++) {
         if (charArr[i] != flash_target_contents[i])
             mismatch = true;
     }
     if (mismatch){
         printf("Save failed!\n");
         ints = save_and_disable_interrupts();
-        flash_range_erase(FLASH_TARGET_OFFSET, FLASH_SECTOR_SIZE);
+        flash_range_erase(FLASH_TARGET_OFFSET, SPACE_SIZE);
         restore_interrupts(ints);
         return false;   
     }
@@ -172,21 +178,11 @@ bool save(char *charArr){
 
 
 // load the PWM data array from the flash memory
-void load(char *read_result){
+char* load(char *read_result){
 
     printf("Read back target region:\n");
     print_buf(flash_target_contents, FLASH_PAGE_SIZE);
-    
 
-    // TODO
-    // Hardcode the size of the daat to be stored.
-    // #define DATA_SIZE 100
-    // char *data = (char *) malloc(DATA_SIZE * sizeof(char)+1);
-    // for(int i = 0; i < DATA_SIZE; i++){
-    //     data[i] = flash_target_contents[i];
-    // }
-
-    //TODO
     // Possibly by doubls scanning the flash memory.
     // Calculate the length of the data during the first scan.
     // Read the data into memory array during the second scan.
@@ -194,29 +190,44 @@ void load(char *read_result){
     while(flash_target_contents[index] != '\0'){
         index++;
     }
+    printf("\nindex: %d\n", index);
     read_result = (char *) malloc(index + 1);
     for(int i = 0; i < index; i++){
         read_result[i] = flash_target_contents[i];
     }
+    read_result[index] = '\0';
+    return read_result;
 
 }
 
 int main(){
     
     stdio_init_all();
+    
+    sleep_ms(10000);
     printf("Hello, world!\n");
 
-    sleep_ms(10000);
-    char test_arr[]= {'a','a','b','c','a','a','b','c','a','a','b','c','\0'};
-
-    printf("%s\n", test_arr);
-    printf("%d\n", strlen(test_arr));
-    bool result = save(test_arr);
-
-    printf("%d\n", result);
     char *charArr;
-    load(charArr);
+    charArr=load(charArr);
 
     printf("%s\n", charArr);
+    printf("Relaod Successfully.\n");
+
+    char test_arr[]= {'a','a','b','c','a','a','b','c','a','a','b','c','\0'};
+    
+    // size_t test_arr_length=sizeof(test_arr)/sizeof(test_arr[0]);
+    // char *char_p=malloc(test_arr_length);
+    // int i=0;
+    // strcpy(char_p,test_arr);
+
+    // printf("%s\n", char_p);
+    // printf("%d\n", strlen(char_p));
+    bool result = save(test_arr);
+
+    // printf("%d\n", result);
+    charArr=load(charArr);
+
+    printf("%s\n", charArr);
+    printf("Relaod Successfully.\n");
 }
 
