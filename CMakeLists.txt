@@ -9,7 +9,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 
-add_executable(pwm_pio piano.c)
+add_executable(pwm_pio pwm_pio.c)
 
 pico_enable_stdio_usb(pwm_pio 1)
 pico_enable_stdio_usb(pwm_pio 1)

@@ -8,7 +8,7 @@
 #include "pwm.pio.h"
 
 
-#define AUDIO_PIN 26
+#define AUDIO_PIN 1
 int position = 0;
 
 void pwm_interrput_handler(){

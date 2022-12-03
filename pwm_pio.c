@@ -9,7 +9,7 @@
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
 #include "pwm.pio.h"
-#include "notes_3.h"
+#include "audio.h"
 #include "hardware/clocks.h"
 
 #define AUDIO_PIN 1
@@ -56,10 +56,10 @@ int main() {
     while (true) {
         // sleep_ms(100);
         // if (position < (DATA_LENGTH << 3) - 1){
-            if ( position < (DATA_LENGTH_3<<2)-1){
+            if ( position < (DATA_LENGTH<<2)-1){
     
             // pio_pwm_set_level(pio0,sm, DATA[position >> 3]);
-            pio_pwm_set_level(pio0,sm, DATA_3[position>>2]);
+            pio_pwm_set_level(pio0,sm, DATA[position>>2]);
             // printf("\n%d",DATA[position>>3]);
             position++;
             
