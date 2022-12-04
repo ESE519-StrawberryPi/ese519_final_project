@@ -2,8 +2,7 @@
 // Created by Haoze Wu on 12/2/22.
 //
 
-#include "stdio.h"
-#include "stdint.h"
+#include "../config.h"
 
 void SetPwmFreq(float freq) {
 #define TOP_MAX 65534
