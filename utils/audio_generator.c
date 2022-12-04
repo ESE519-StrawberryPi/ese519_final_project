@@ -4,7 +4,7 @@
 
 #include "audio_generator.h"
 
-void free_mode(){
+void free_mode(PIO pio, uint sm){
 
     // uint cycles=clock_get_hz(clk_sys)/(freq*clk_div);
     uint clk_div = 0x04;
@@ -25,7 +25,7 @@ void free_mode(){
 
     while(true){
 
-        char c = getchar_timeout_us(4 * 1000 * 1000);
+        char c = getchar_timeout_us(4 * 1000 *  1000);
         if(c == 'q'){
             pio_sm_set_clkdiv(pio,sm,1);
             break;

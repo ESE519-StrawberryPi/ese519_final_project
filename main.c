@@ -23,6 +23,14 @@ int main(){
 
     stdio_init_all();
 
+    // Set up PIO
+    PIO pio = pio0;
+    uint sm = 0;
+    uint offset = pio_add_program(pio, &pwm_program);
+    printf("Loaded program at %d\n", offset);
+    pwm_program_init(pio, sm, offset,AUDIO_PIN);
+
+
     printf("Welcome to the music instrument. We have three modes. \n");
 
     while(true){
@@ -49,14 +57,14 @@ int main(){
                 play_mode(pio, sm,DATA_AUDIO, DATA_LENGTH_AUDIO);
                 break;
             case 'f':
-                free_mode();
+                free_mode(pio, sm);
                 break;
             case 'l':
                 load_music();
                 break;
         }
 
-        printf("\n\n\n\n");
+//        printf("\n\n\n\n");
         sleep_ms(1000);
 
     }
