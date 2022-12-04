@@ -8,19 +8,19 @@
 //#include "utils/pwm_utils.h"
 #include "utils/play.h"
 #include "utils/audio_generator.h"
+#include "utils/sl_utils.h"
 
 #include "resources/audio.h"
 
-void record_music(){
-    ;
-}
-
-void load_music(){
-    ;
-}
+//void record_music(){
+//    ;
+//}
+//
+//void load_music(){
+//    ;
+//}
 
 int main(){
-
     stdio_init_all();
 
     // Set up PIO
@@ -29,6 +29,12 @@ int main(){
     uint offset = pio_add_program(pio, &pwm_program);
     printf("Loaded program at %d\n", offset);
     pwm_program_init(pio, sm, offset,AUDIO_PIN);
+
+
+    //
+    uint32_t period = 64934;
+    int recordedCharLen = 10;
+
 
 
     printf("Welcome to the music instrument. We have three modes. \n");
@@ -50,7 +56,7 @@ int main(){
         switch(c){
             case 'r':
                 //TODO: Finalize teh record function
-                record_music();
+                record_music(recordedCharLen);
                 break;
             case 'p':
                 set_sys_clock_khz(66000, true);
@@ -60,7 +66,7 @@ int main(){
                 free_mode(pio, sm);
                 break;
             case 'l':
-                load_music();
+                load_music(recordedCharLen, pio, sm, period);
                 break;
         }
 
