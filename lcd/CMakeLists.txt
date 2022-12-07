@@ -21,8 +21,8 @@ target_sources(lcd_display PRIVATE
         DEV_Config.h
         fonts.c
         fonts.h
-        show_music.c
-        show_music.h
+        music_pictures.c
+        music_pictures.h
     )
 
 target_link_libraries(
