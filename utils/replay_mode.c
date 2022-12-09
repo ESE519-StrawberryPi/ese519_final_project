@@ -8,14 +8,19 @@
 
 void record_music(int charArrLen){
     // record the music
+    printf("Starting recording...\n");
     char *charArr = (char *) malloc(charArrLen * sizeof(char));
     int index = 0;
     while(index < charArrLen - 1){
-        char c = getchar_timeout_us(4 * 1000 * 1000);
-        charArr[index] = c;
+        char c = getchar_timeout_us(1 * 1000 * 10);
         // if no input, you get PICO_ERROR_TIMEOUT = -1
-        if(c == PICO_ERROR_TIMEOUT){
-            charArr[index] = '\n';
+        if(c == 'q') {
+            printf("Quit the record.\n");
+            break;
+        }else if(c == PICO_ERROR_TIMEOUT){
+            charArr[index] = 'b';
+        }else{
+            charArr[index] = c;
         }
         index++;
     }
@@ -27,9 +32,11 @@ void record_music(int charArrLen){
 
 void load_music(int charArrLen, PIO pio, uint sm, uint32_t period){
     // read the music.
+    printf("Loading Stored samples.\n");
     char *charArr = (char *) malloc(charArrLen * sizeof(char));
-    load(charArr);
+    charArr = load(charArr);
     printf("Load music successfully! \n");
+    printf("%s\n",charArr);
 
     // play the recorded music;
     int index = 0;

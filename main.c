@@ -8,17 +8,10 @@
 //#include "utils/pwm_utils.h"
 #include "utils/play.h"
 #include "utils/audio_generator.h"
-#include "utils/sl_utils.h"
+
 
 #include "resources/audio.h"
 
-//void record_music(){
-//    ;
-//}
-//
-//void load_music(){
-//    ;
-//}
 
 int main(){
     stdio_init_all();
@@ -33,7 +26,7 @@ int main(){
 
     //
     uint32_t period = 64934;
-    int recordedCharLen = 10;
+    int recordedCharLen = 1000;
 
 
 
