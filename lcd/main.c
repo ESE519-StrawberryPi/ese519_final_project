@@ -11,13 +11,6 @@ const uint16_t height = 160;
 const uint16_t block_width = 20;
 const uint16_t block_height = 10;
 
-//enum brickPos_x = {
-//    ZERO = 0,
-//    FIRST = 20,
-//    SECOND = 40,
-//    THIRD = 60,
-//}
-
 /*
  * Game display, according to the notes queue.
  */
