@@ -5,6 +5,7 @@
 #include "play.h"
 #include "sl_utils.h"
 #include "audio_generator.h"
+#include "../zrx_543_driver/zrx543_driver.h"
 
 void record_music(int charArrLen){
     // record the music
@@ -12,13 +13,15 @@ void record_music(int charArrLen){
     char *charArr = (char *) malloc(charArrLen * sizeof(char));
     int index = 0;
     while(index < charArrLen - 1){
-        char c = getchar_timeout_us(1 * 1000 * 10);
+//        char c = getchar_timeout_us(1 * 1000 * 10);
+        char c = getKey();
+//        sleep_ms(10);
         // if no input, you get PICO_ERROR_TIMEOUT = -1
-        if(c == 'q') {
+        if(c == 'f') {
             printf("Quit the record.\n");
             break;
-        }else if(c == PICO_ERROR_TIMEOUT){
-            charArr[index] = 'b';
+        }else if(c == 'm'){
+            charArr[index] = 'm';
         }else{
             charArr[index] = c;
         }

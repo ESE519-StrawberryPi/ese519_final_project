@@ -8,13 +8,26 @@
 //#include "utils/pwm_utils.h"
 #include "utils/play.h"
 #include "utils/audio_generator.h"
+#include "zrx_543_driver/zrx543_driver.h"
 
 
 #include "resources/audio.h"
 
+/*
+ * TODO:
+ * TODO 1. Update the recording function to adapt the new keypad.
+ *         Sampling it under the sleep_ms function to obtain a certain sample rate.
+ * TODO 2. Update the LCD function with judgement function. Judge the pressing timing
+ *         in a specific timer period deciding by the position of the dropping blocks.
+ * TODO 3. Complete the ZRX543 driver.
+ * TODO 4. Complete the gaming display setting.
+ * TODO 5. Merge all changes and reformat the structure.
+ *
+ */
 
 int main(){
     stdio_init_all();
+    init_gpio();
 
     // Set up PIO
     PIO pio = pio0;
@@ -41,6 +54,7 @@ int main(){
         printf("Press 'q' to quit. \n");
         printf("Waiting for the input... \n");
         char c = getchar_timeout_us(4 * 1000 * 1000);
+        char v;
         if(c == 'q'){
             printf("Bye! \n");
             break;
@@ -48,7 +62,6 @@ int main(){
 
         switch(c){
             case 'r':
-                //TODO: Finalize teh record function
                 record_music(recordedCharLen);
                 break;
             case 'p':
@@ -57,6 +70,11 @@ int main(){
                 break;
             case 'f':
                 free_mode(pio, sm);
+//                   while(true){
+//                       v = getKey();
+//                       printf("%c\n",v);
+//                   }
+
                 break;
             case 'l':
                 load_music(recordedCharLen, pio, sm, period);
