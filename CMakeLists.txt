@@ -8,14 +8,14 @@ project(final_project C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 pico_sdk_init()
 
-add_executable(digital_piano main.c zrx_543_driver/zrx543_driver.h zrx_543_driver/zrx543_driver.c)
+add_executable(digital_piano main.c zrx_543_driver/zrx543_driver.h zrx_543_driver/zrx543_driver.c test.c)
 
 pico_enable_stdio_usb(digital_piano 1)
 
 pico_generate_pio_header(digital_piano ${CMAKE_CURRENT_LIST_DIR}/utils/pwm.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/utils)
 
 target_sources(digital_piano PRIVATE
-        main.c
+        test.c
         utils/audio_generator.h
         utils/audio_generator.c
         utils/play.h
