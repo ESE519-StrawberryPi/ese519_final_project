@@ -14,15 +14,6 @@
 
 #include "resources/audio.h"
 
-/*
- * TODO:
- * TODO 2. Update the LCD function with judgement function. Judge the pressing timing
- *         in a specific timer period deciding by the position of the dropping blocks.
- * TODO 4. Complete the gaming display setting.
- * TODO 5. Merge all changes and reformat the structure.
- *
- */
-
 int main(){
     stdio_init_all();
     init_gpio();
@@ -54,7 +45,7 @@ int main(){
         char c = get_key_timeout_us(4 * 1000 * 1000);
 //        printf("\n%c\n",c);
 //        char v;
-        if(c == '#'){
+        if(c == '#' || c == '0'){
             printf("Bye! \n");
             break;
         }

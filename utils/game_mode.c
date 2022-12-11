@@ -15,7 +15,7 @@ const uint16_t height = 160;
 
 const uint16_t block_width = 20;
 const uint16_t block_height = 10;
-const uint16_t block_speed = 10;
+const uint16_t block_speed = 20;
 
 const uint16_t bar_x = 0;
 const uint16_t bar_y = 148;
@@ -30,19 +30,24 @@ const char index_arr[] ={'1','2','3','A'};
 const int prefect_score = 100;
 
 void display_score(int score){
-    int x = 80;
-    int y = 80;
-    ST7735_WriteString(x,y,"Score:\n",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    int x = 5;
+    int y = 70;
+    ST7735_WriteString(x, y,"Score  ",Font_7x10,ST7735_BLACK,ST7735_GREEN);
     char score_str[10];
-    sprintf(score_str,"%d\n",score);
-    printf()
+    sprintf(score_str,"%d",score);
+    printf("score_str: %d", score);
+
+
     ST7735_WriteString(x + 43, y,score_str,Font_7x10,ST7735_BLACK,ST7735_GREEN);
-    ST7735_WriteString(x,y + 10,"Press # to quit",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y + 10,"         ",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y + 20,"Press #  ",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y + 30,"to quit  ",Font_7x10,ST7735_BLACK,ST7735_GREEN);
 }
 
-int judge(uint16_t x_idx,uint16_t y_idx, int flag, char key) {
+int judge(uint16_t x_idx, uint16_t y_idx, int flag, char key, uint16_t speed) {
     printf("Begin Judge\n");
     if(flag == 2) return 2;
+    if(flag == 1) return 1;
 
 //    char key = get_key_timeout_us(250 * 1000);
     printf("%c\n",key);
@@ -56,7 +61,7 @@ int judge(uint16_t x_idx,uint16_t y_idx, int flag, char key) {
         return 2;
     } else {
         // if y is correct
-        int absolute_height = y_idx * block_height;
+        int absolute_height = y_idx *  speed;
         if (absolute_height >= correct_range_upper && absolute_height <= correct_range_bottom) {
             printf("Perfect Click\n");
             return 1;
@@ -70,10 +75,11 @@ int judge(uint16_t x_idx,uint16_t y_idx, int flag, char key) {
  * Game display, according to the notes queue.
  */
 int display_games(uint16_t *note_queue, int length) {
-
+    uint16_t speed = rand()%10 + block_speed;
     int index = 0;
-    int max_step_height = 160 / block_speed;
+    int max_step_height = 160 / speed;
     int score = 0;
+
 
     while(index < length) {
         sleep_ms(100);
@@ -83,7 +89,7 @@ int display_games(uint16_t *note_queue, int length) {
         int x_position_index = note_queue[index];
         int flag = 0; // 0: exist; 1:correct; 2: wrong;
 
-        while(count < max_step_height) {
+        while(count < max_step_height + 1) {
             printf("Count :%d\n",count);
             sleep_ms(100);
             ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
@@ -92,20 +98,27 @@ int display_games(uint16_t *note_queue, int length) {
 //            int key = getchar_timeout_us(5*1000*1000);
             printf("key: %c\n", key);
             // bottom-left position (index) of brick
-            flag = judge(x_position_index, count, flag, key);
+            flag = judge(x_position_index, count, flag, key, speed);
 
             printf("flag: %d\n", flag);
 
             // Move the rectangular down each iteration, each time move down 1/8 of the height of the screen.
             if(flag == 0){
-                ST7735_FillRectangle(block_width * x_position_index, block_speed*count,block_width,block_height, ST7735_GREEN);
+                ST7735_FillRectangle(block_width * x_position_index, speed*count,block_width,block_height,
+                                     ST7735_GREEN);
             }else if(flag == 1){
-                ST7735_FillRectangle(block_width * x_position_index, block_speed*count,block_width,block_height, ST7735_YELLOW);
-                score = score + prefect_score;
+                ST7735_FillRectangle(block_width * x_position_index, speed*count,block_width,block_height,
+                                     ST7735_YELLOW);
+            }else if(flag == 2){
+                ST7735_FillRectangle(block_width * x_position_index, speed * count, block_width, block_height,
+                                     ST7735_RED);
             }
             count++;
         }
         printf("Index :%d\n",index);
+        if(flag == 1){
+            score += prefect_score;
+        }
         index++;
 
         // After moving the rectangular down to the bottom of the screen, continue generating new rectangular
@@ -119,7 +132,7 @@ int display_games(uint16_t *note_queue, int length) {
 
 void show(int y){
     int x = 0;
-    ST7735_WriteString(x,y,"A:Record",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x, y,"A:Record",Font_7x10,ST7735_BLACK,ST7735_GREEN);
     ST7735_WriteString(x,y+10,"B:Play",Font_7x10,ST7735_BLACK,ST7735_GREEN);
     ST7735_WriteString(x,y+20,"C:Free Mode",Font_7x10,ST7735_BLACK,ST7735_GREEN);
     ST7735_WriteString(x,y+30,"D:Load",Font_7x10,ST7735_BLACK,ST7735_GREEN);
@@ -131,14 +144,14 @@ void show(int y){
 void game_mode_test(){
     ST7735_Init();
     init_gpio();
-    uint16_t index[]={0,1,2,3};
+    uint16_t index[]={0,1,2,3, 1, 2, 2, 3, 1, 0, 0};
     int length=sizeof(index)/sizeof(index[0]);
     int score=display_games(index,length);
-    ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
+    ST7735_FillRectangle(0, 0, width, height, ST7735_BLACK);
     while(true){
         display_score(score);
         char key = get_key_timeout_us(2000 * 1000);
-        if(key == '#'){
+        if(key == '#' || key == '0'){
             break;
         }
         sleep_ms(100);
