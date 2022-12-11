@@ -11,6 +11,7 @@ const uint16_t height = 160;
 
 const uint16_t block_width = 20;
 const uint16_t block_height = 10;
+const uint16_t block_speed = 10;
 
 const uint16_t bar_x = 0;
 const uint16_t bar_y = 148;
@@ -24,6 +25,8 @@ const uint16_t correct_range_bottom = height;
 const char index_arr[] ={'1','2','3','A'};
 
 void judge(uint16_t x_idx,uint16_t y_idx, int* flag) {
+    if(*flag == 2 || *flag == 3) return;
+
     char key = get_key_timeout_us(250 * 1000);
     if(key == 'm'){
         *flag = 0;
@@ -51,7 +54,7 @@ void judge(uint16_t x_idx,uint16_t y_idx, int* flag) {
 void display_games(uint16_t *note_queue, int length) {
 
     int index = 0;
-    int max_step_height = 160 / 10;
+    int max_step_height = 160 / block_speed;
 
     while(index < length) {
         sleep_ms(100);
@@ -71,9 +74,9 @@ void display_games(uint16_t *note_queue, int length) {
 
             // Move the rectangular down each iteration, each time move down 1/8 of the height of the screen.
             if(*flag == 0){
-                ST7735_FillRectangle(block_width * x_position_index, block_height*count,block_width,block_height, 0x00);
+                ST7735_FillRectangle(block_width * x_position_index, block_speed*count,block_width,block_height, 0x00);
             }else if(*flag == 1){
-                ST7735_FillRectangle(block_width * x_position_index, block_height*count,block_width,block_height, 0x0f);
+                ST7735_FillRectangle(block_width * x_position_index, block_speed*count,block_width,block_height, 0x0f);
             }
 
             count++;
