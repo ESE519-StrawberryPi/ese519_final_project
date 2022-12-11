@@ -7,10 +7,10 @@
 #include "zrx543_driver.h"
 
 // Define the Row GPIO PIN
-const uint R1 = 10;
-const uint R2 = 11;
-const uint R3 = 12;
-const uint R4 = 13;
+const uint R1 = 2;
+const uint R2 = 3;
+const uint R3 = 4;
+const uint R4 = 5;
 
 // Define the Column GPIO PIN
 //const uint C0 = 17;

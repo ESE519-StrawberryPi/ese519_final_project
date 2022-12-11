@@ -8,7 +8,7 @@ project(final_project C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 pico_sdk_init()
 
-add_executable(digital_piano main.c zrx_543_driver/zrx543_driver.h zrx_543_driver/zrx543_driver.c test.c utils/game_mode.h)
+add_executable(digital_piano main.c)
 
 pico_enable_stdio_usb(digital_piano 1)
 
@@ -25,8 +25,16 @@ target_sources(digital_piano PRIVATE
         utils/pwm_utils.h
         utils/sl_utils.c
         utils/sl_utils.h
+        utils/game_mode.c
+        utils/game_mode.h
         zrx_543_driver/zrx543_driver.h
         zrx_543_driver/zrx543_driver.c
+        st7735_driver/st7735_driver.h
+        st7735_driver/st7735_driver.c
+        st7735_driver/fonts.h
+        st7735_driver/fonts.c
+        st7735_driver/DEV_Config.h
+        st7735_driver/DEV_Config.c
         config.h
     )
 
@@ -39,6 +47,8 @@ target_link_libraries(
     hardware_clocks
     hardware_pwm
     hardware_flash
+    hardware_spi
+    hardware_i2c
 )
 # example_auto_set_url(audio)
 pico_add_extra_outputs(digital_piano)
