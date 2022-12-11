@@ -16,4 +16,6 @@ bool save(char *charArr);
 
 char* load(char *read_result);
 
+int get_key_timeout_us(uint32_t timeout_us);
+
 #endif //FINAL_PROJECT_SL_UTILS_H
