@@ -8,7 +8,7 @@ project(final_project C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 pico_sdk_init()
 
-add_executable(digital_piano main.c zrx_543_driver/zrx543_driver.h zrx_543_driver/zrx543_driver.c test.c)
+add_executable(digital_piano main.c zrx_543_driver/zrx543_driver.h zrx_543_driver/zrx543_driver.c test.c utils/game_mode.h)
 
 pico_enable_stdio_usb(digital_piano 1)
 
