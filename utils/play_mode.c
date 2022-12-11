@@ -35,6 +35,7 @@ void play_mode(PIO pio, uint sm, uint8_t *data, int dataLen){
         }else{
             position = 0;
             char c = get_key_timeout_us(1*1000*1500);
+            printf("%c",c);
             if (c=='#'){
                 return;
             }
