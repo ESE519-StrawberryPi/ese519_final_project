@@ -76,6 +76,7 @@ int main(){
             case '*':
                 printf("\nWelcome To Games!\n");
                 game_mode_test();
+                multicore_reset_core1();
                 break;
 
         }

@@ -8,6 +8,7 @@
 #include <pico/stdlib.h>
 #include "sl_utils.h"
 #include "../zrx_543_driver/zrx543_driver.h"
+#include "play.h"
 
 const uint16_t width = 80;
 const uint16_t height = 160;
@@ -36,7 +37,6 @@ void display_score(int score){
     char score_str[10];
     sprintf(score_str,"%d",score);
     printf("score_str: %d", score);
-
 
     ST7735_WriteString(x + 43, y,score_str,Font_7x10,ST7735_BLACK,ST7735_GREEN);
     ST7735_WriteString(x,y + 10,"         ",Font_7x10,ST7735_BLACK,ST7735_GREEN);
@@ -142,10 +142,17 @@ void show(int y){
 
 
 void game_mode_test(){
-    ST7735_Init();
-    init_gpio();
+
     uint16_t index[]={0,1,2,3, 1, 2, 2, 3, 1, 0, 0};
     int length=sizeof(index)/sizeof(index[0]);
+    multicore_reset_core1();
+    multicore_launch_core1(core1_entry);
+    // push the param and func into stack
+    multicore_fifo_push_blocking((uintptr_t) &play_mode_no_param);
+    printf("Complete main thread.");
+
+    ST7735_Init();
+    init_gpio();
     int score=display_games(index,length);
     ST7735_FillRectangle(0, 0, width, height, ST7735_BLACK);
     while(true){

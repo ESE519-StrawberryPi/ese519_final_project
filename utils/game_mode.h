@@ -1,7 +1,10 @@
 //
 // Created by Haoze Wu on 12/11/22.
 //
+#include <stdio.h>
 #include "pico/stdlib.h"
+#include "pico/multicore.h"
+
 #ifndef FINAL_PROJECT_GAME_MODE_H
 #define FINAL_PROJECT_GAME_MODE_H
 

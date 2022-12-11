@@ -49,6 +49,7 @@ target_link_libraries(
     hardware_flash
     hardware_spi
     hardware_i2c
+    pico_multicore
 )
 # example_auto_set_url(audio)
 pico_add_extra_outputs(digital_piano)
