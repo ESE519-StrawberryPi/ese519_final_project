@@ -24,6 +24,12 @@ const uint16_t correct_range_bottom = height;
 
 const char index_arr[] ={'1','2','3','A'};
 
+const int prefect_score = 100;
+const int good_score = 50;
+const int bad_score = 0;
+
+
+
 void judge(uint16_t x_idx,uint16_t y_idx, int* flag) {
     if(*flag == 2 || *flag == 3) return;
 
@@ -39,11 +45,15 @@ void judge(uint16_t x_idx,uint16_t y_idx, int* flag) {
     } else {
         // if y is correct
         int absolute_height = y_idx * block_height;
-        if (absolute_height >= correct_range_upper && absolute_height <= correct_range_bottom) {
+        if (absolute_height == correct_range_upper) {
             *flag = 1;
             return;
-        }else{
+        }else if(absolute_height > correct_range_upper && absolute_height <= correct_range_bottom){
             *flag = 2;
+            return;
+        }
+        else{
+            *flag = 3;
             return;
         }
     }
@@ -55,6 +65,7 @@ void display_games(uint16_t *note_queue, int length) {
 
     int index = 0;
     int max_step_height = 160 / block_speed;
+    int score = 0;
 
     while(index < length) {
         sleep_ms(100);
@@ -66,7 +77,7 @@ void display_games(uint16_t *note_queue, int length) {
             ST7735_FillRectangle(0, 0, 80, 160, 0xff);
             ST7735_FillRectangle(bar_x, bar_y,bar_width,bar_height,0x00);
 
-            int *flag; // 0: exist; 1: correct click; 2: mistaken click;
+            int *flag; // 0: exist; 1: prefect click; 2: good click 3: missed;
             *flag = 0;
 
             // bottom-left position (index) of brick
@@ -77,8 +88,12 @@ void display_games(uint16_t *note_queue, int length) {
                 ST7735_FillRectangle(block_width * x_position_index, block_speed*count,block_width,block_height, 0x00);
             }else if(*flag == 1){
                 ST7735_FillRectangle(block_width * x_position_index, block_speed*count,block_width,block_height, 0x0f);
+                score = score + prefect_score;
+            }else if(*flag == 2){
+                score = score + good_score;
+            }else if(*flag == 3){
+                score = score + bad_score;
             }
-
             count++;
         }
         index++;
@@ -87,11 +102,35 @@ void display_games(uint16_t *note_queue, int length) {
         // with respect to the new notes in queue
 
     }
-    ST7735_FillRectangle(0, 0, 80, 160, 0xff);
-
-
+    ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
+    while(true){
+        score_show(score);
+        char key = get_key_timeout_us(250 * 1000);
+        if(key == '#'){
+            break;
+        }
+    }
+    ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
     return;
 
+}
+void show(int y){
+    int x = 0;
+    ST7735_WriteString(x,y,"A:Record",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y+10,"B:Play",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y+20,"C:Free Mode",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y+30,"D:Load",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y+40,"#:Quit",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+
+}
+void score_show(int score){
+    int x = 80;
+    int y = 80;
+    ST7735_WriteString(x,y,"Score:",Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    char score_str[10];
+    sprintf(score_str,"%d",score);
+    ST7735_WriteString(x+30,y,score_str,Font_7x10,ST7735_BLACK,ST7735_GREEN);
+    ST7735_WriteString(x,y+10,"Press # to quit",Font_7x10,ST7735_BLACK,ST7735_GREEN);
 }
 
 /*
