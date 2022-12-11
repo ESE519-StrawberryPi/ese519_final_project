@@ -74,7 +74,6 @@ int main(){
                 break;
         }
 
-//        printf("\n\n\n\n");
         sleep_ms(1000);
 
     }
