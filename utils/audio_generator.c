@@ -10,7 +10,7 @@
 void play_a_note(PIO pio, uint sm, uint32_t period, char c){
     switch (c) {
         case '1':
-            printf("Entering A mode\n");
+//            printf("Entering A mode\n");
             pio_sm_set_clkdiv(pio,sm,(float)8.8125);
             pio_pwm_set_period(pio, sm, 65476);
             pio_pwm_set_level(pio,sm,period/2);
@@ -68,6 +68,7 @@ void play_a_note(PIO pio, uint sm, uint32_t period, char c){
 void free_mode(PIO pio, uint sm){
 
     // uint cycles=clock_get_hz(clk_sys)/(freq*clk_div);
+    printf("Entering Free Playing Mode!\n");
     uint clk_div = 0x04;
     uint32_t period = 64934;
 

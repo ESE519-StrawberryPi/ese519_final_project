@@ -37,7 +37,7 @@ void load_music(int charArrLen, PIO pio, uint sm, uint32_t period){
     char *charArr = (char *) malloc(charArrLen * sizeof(char));
     charArr = load(charArr);
     printf("Load music successfully! \n");
-    printf("%s\n",charArr);
+//    printf("%s\n",charArr);
 
     // play the recorded music;
     int index = 0;

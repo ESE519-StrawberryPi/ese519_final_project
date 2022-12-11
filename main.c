@@ -11,19 +11,14 @@
 #include "zrx_543_driver/zrx543_driver.h"
 #include "utils/sl_utils.h"
 
-
 #include "resources/audio.h"
 
 /*
  * TODO:
- * TODO 1. Update the recording function to adapt the new keypad.
- *         Sampling it under the sleep_ms function to obtain a certain sample rate.
  * TODO 2. Update the LCD function with judgement function. Judge the pressing timing
  *         in a specific timer period deciding by the position of the dropping blocks.
- * TODO 3. Complete the ZRX543 driver.
  * TODO 4. Complete the gaming display setting.
  * TODO 5. Merge all changes and reformat the structure.
- * TODO 6. Check which GPIO pin is usable for keypad and hardcore in the driver.
  *
  */
 
@@ -35,14 +30,13 @@ int main(){
     PIO pio = pio0;
     uint sm = 0;
     uint offset = pio_add_program(pio, &pwm_program);
-    printf("Loaded program at %d\n", offset);
+//    printf("Loaded program at %d\n", offset);
     pwm_program_init(pio, sm, offset,AUDIO_PIN);
 
 
     //
     uint32_t period = 64934;
     int recordedCharLen = 1000;
-
 
 
     printf("Welcome to the music instrument. We have three modes. \n");
@@ -56,7 +50,7 @@ int main(){
         printf("Press '#' to quit. \n");
         printf("Waiting for the input... \n");
         char c = get_key_timeout_us(4 * 1000 * 1000);
-        printf("\n%c\n",c);
+//        printf("\n%c\n",c);
 //        char v;
         if(c == '#'){
             printf("Bye! \n");
@@ -73,11 +67,7 @@ int main(){
                 break;
             case 'C':
                 free_mode(pio, sm);
-//                   while(true){
-//                       v = getKey();
-//                       printf("%c\n",v);
-//                   }
-
+                printf("Exited free mode. \n");
                 break;
             case 'D':
                 load_music(recordedCharLen, pio, sm, period);

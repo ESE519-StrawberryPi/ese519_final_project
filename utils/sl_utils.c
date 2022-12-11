@@ -41,7 +41,7 @@ bool save(char *charArr){
 //    printf("realloc successfully.\n");
 
 
-    print_buf(temp, len);
+//    print_buf(temp, len);
     // Erase the flash memory.
     // Before erasing, disable the interrupts and save the breakpoint.
     // Recover the breakpoint and enable the interrupts after erasing.
@@ -57,7 +57,7 @@ bool save(char *charArr){
     flash_range_program(FLASH_TARGET_OFFSET, (uint8_t*)temp, SPACE_SIZE);
     restore_interrupts(ints);
     printf("Write Successfully.\n");
-    print_buf(flash_target_contents, len);
+//    print_buf(flash_target_contents, len);
 
     // Check if stored data is correct
     // return false is mismatch and erase the data written.
@@ -84,7 +84,7 @@ bool save(char *charArr){
 char* load(char *read_result){
 
     printf("Read back target region:\n");
-    print_buf(flash_target_contents, FLASH_PAGE_SIZE);
+//    print_buf(flash_target_contents, FLASH_PAGE_SIZE);
 
     // Possibly by doubles scanning the flash memory.
     // Calculate the length of the data during the first scan.
@@ -99,7 +99,7 @@ char* load(char *read_result){
         read_result[i] = flash_target_contents[i];
     }
     read_result[index] = '\0';
-    print_buf(flash_target_contents,index);
+//    print_buf(flash_target_contents,index);
     return read_result;
 
 }
