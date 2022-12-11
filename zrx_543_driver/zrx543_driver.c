@@ -13,7 +13,6 @@ const uint R3 = 4;
 const uint R4 = 5;
 
 // Define the Column GPIO PIN
-//const uint C0 = 17;
 const uint C1 = 18;
 const uint C2 = 19;
 const uint C3 = 20;

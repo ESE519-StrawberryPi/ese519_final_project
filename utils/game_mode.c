@@ -28,8 +28,6 @@ const uint16_t correct_range_bottom = height;
 const char index_arr[] ={'1','2','3','A'};
 
 const int prefect_score = 100;
-//const int good_score = 50;
-//const int bad_score = 0;
 
 void display_score(int score){
     int x = 80;
@@ -37,6 +35,7 @@ void display_score(int score){
     ST7735_WriteString(x,y,"Score:\n",Font_7x10,ST7735_BLACK,ST7735_GREEN);
     char score_str[10];
     sprintf(score_str,"%d\n",score);
+    printf()
     ST7735_WriteString(x + 43, y,score_str,Font_7x10,ST7735_BLACK,ST7735_GREEN);
     ST7735_WriteString(x,y + 10,"Press # to quit",Font_7x10,ST7735_BLACK,ST7735_GREEN);
 }
@@ -138,7 +137,7 @@ void game_mode_test(){
     ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
     while(true){
         display_score(score);
-        char key = get_key_timeout_us(250 * 1000);
+        char key = get_key_timeout_us(2000 * 1000);
         if(key == '#'){
             break;
         }
