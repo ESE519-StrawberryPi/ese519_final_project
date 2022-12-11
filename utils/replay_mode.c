@@ -13,11 +13,9 @@ void record_music(int charArrLen){
     char *charArr = (char *) malloc(charArrLen * sizeof(char));
     int index = 0;
     while(index < charArrLen - 1){
-//        char c = getchar_timeout_us(1 * 1000 * 10);
-        char c = getKey();
-//        sleep_ms(10);
-        // if no input, you get PICO_ERROR_TIMEOUT = -1
-        if(c == 'f') {
+        char c = get_key_timeout_us(1*1000*250);
+
+        if(c == '#') {
             printf("Quit the record.\n");
             break;
         }else if(c == 'm'){

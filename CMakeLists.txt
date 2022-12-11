@@ -15,7 +15,7 @@ pico_enable_stdio_usb(digital_piano 1)
 pico_generate_pio_header(digital_piano ${CMAKE_CURRENT_LIST_DIR}/utils/pwm.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/utils)
 
 target_sources(digital_piano PRIVATE
-        test.c
+        main.c
         utils/audio_generator.h
         utils/audio_generator.c
         utils/play.h

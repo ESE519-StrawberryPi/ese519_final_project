@@ -3,6 +3,7 @@
 //
 
 #include "play.h"
+#include "sl_utils.h"
 
 // play the given music data
 void play_mode(PIO pio, uint sm, uint8_t *data, int dataLen){
@@ -22,7 +23,7 @@ void play_mode(PIO pio, uint sm, uint8_t *data, int dataLen){
 //    pwm_program_init(pio, sm, offset, AUDIO_PIN);
     pio_pwm_set_period(pio, sm, period);
 
-    printf("\n If you want to exit the loop, please press 'q'.");
+    printf("\n If you want to exit the loop, please press '#'.\n");
     int position = 0;
     while (true) {
 
@@ -33,8 +34,8 @@ void play_mode(PIO pio, uint sm, uint8_t *data, int dataLen){
             position++;
         }else{
             position = 0;
-            char c = getchar_timeout_us(2 * 1000);
-            if (c=='q'){
+            char c = get_key_timeout_us(1*1000*1500);
+            if (c=='#'){
                 return;
             }
             pio_pwm_set_level(pio0,sm, 0);

@@ -82,28 +82,28 @@ char get_row_key(const char* row_data){
 }
 
 char getKey(){
-    printf("====================\n");
+//    printf("====================\n");
     char result ;
 
-    printf("ROW1\n");
+//    printf("ROW1\n");
     gpio_put(R1,true);
     result = get_row_key(row_1);
     gpio_put(R1,false);
     if(result != 'm') return result;
 
-    printf("ROW2\n");
+//    printf("ROW2\n");
     gpio_put(R2,true);
     result = get_row_key(row_2);
     gpio_put(R2,false);
     if(result != 'm') return result;
 
-    printf("ROW3\n");
+//    printf("ROW3\n");
     gpio_put(R3,true);
     result = get_row_key(row_3);
     gpio_put(R3,false);
     if(result != 'm') return result;
 
-    printf("ROW4\n");
+//    printf("ROW4\n");
     gpio_put(R4,true);
     result = get_row_key(row_4);
     gpio_put(R4,false);

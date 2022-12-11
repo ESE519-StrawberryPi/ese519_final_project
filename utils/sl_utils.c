@@ -3,6 +3,7 @@
 //
 
 #include "sl_utils.h"
+#include "../zrx_543_driver/zrx543_driver.h"
 
 const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGET_OFFSET);
 
@@ -100,5 +101,29 @@ char* load(char *read_result){
     read_result[index] = '\0';
     print_buf(flash_target_contents,index);
     return read_result;
+
+}
+
+static int get_key_until(absolute_time_t until) {
+    char current='m';
+    do {
+        int read = getKey();
+        if(read != 'm'){
+            current=read;
+        }
+        if (read == 'm' && current != 'm') {
+            return current;
+        }
+        if (time_reached(until)) {
+            return current;
+        }
+        busy_wait_us(1);
+    } while (true);
+
+}
+
+int get_key_timeout_us(uint32_t timeout_us) {
+
+    return get_key_until(make_timeout_time_us(timeout_us));
 
 }
