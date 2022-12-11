@@ -3,7 +3,9 @@
 //
 
 #include "sl_utils.h"
+#include "../zrx_543_driver/zrx543_driver.h"
 
+const uint8_t *flash_target_contents = (const uint8_t *) (XIP_BASE + FLASH_TARGET_OFFSET);
 
 void print_buf(const uint8_t *buf, size_t len) {
     for (size_t i = 0; i < len; ++i) {
@@ -24,22 +26,22 @@ bool save(char *charArr){
     char* temp= (char *) malloc(len * sizeof(char));
     strcpy(temp, charArr);
     temp[len] = '\0';
-    printf("Copied Array:\n");
-    printf("%s\n",temp);
+//    printf("Copied Array:\n");
+//    printf("%s\n",temp);
 
     // Transfer the length of data into
     // the integer multiple of the size of the sector.
     size_t SPACE_SIZE = ((len / FLASH_SECTOR_SIZE) + 1 ) * FLASH_SECTOR_SIZE;
     // size_t SPACE_SIZE=len;
 
-    printf("spaceSize: %d\n", SPACE_SIZE);
+//    printf("spaceSize: %d\n", SPACE_SIZE);
 
     temp=(char*) realloc(temp, 1400);
 
-    printf("realloc successfully.\n");
+//    printf("realloc successfully.\n");
 
 
-    print_buf(temp, len);
+//    print_buf(temp, len);
     // Erase the flash memory.
     // Before erasing, disable the interrupts and save the breakpoint.
     // Recover the breakpoint and enable the interrupts after erasing.
@@ -49,17 +51,13 @@ bool save(char *charArr){
 
     printf("\nErase successfully.\n");
 
-    // print_buf(flash_target_contents, SPACE_SIZE);
-
-    // printf("\nData printed.\n");
-
     // Write the data char array into the flash memory.
     // Similar to erase.
     ints = save_and_disable_interrupts();
     flash_range_program(FLASH_TARGET_OFFSET, (uint8_t*)temp, SPACE_SIZE);
     restore_interrupts(ints);
     printf("Write Successfully.\n");
-    print_buf(flash_target_contents, len);
+//    print_buf(flash_target_contents, len);
 
     // Check if stored data is correct
     // return false is mismatch and erase the data written.
@@ -86,7 +84,7 @@ bool save(char *charArr){
 char* load(char *read_result){
 
     printf("Read back target region:\n");
-    print_buf(flash_target_contents, FLASH_PAGE_SIZE);
+//    print_buf(flash_target_contents, FLASH_PAGE_SIZE);
 
     // Possibly by doubles scanning the flash memory.
     // Calculate the length of the data during the first scan.
@@ -101,6 +99,31 @@ char* load(char *read_result){
         read_result[i] = flash_target_contents[i];
     }
     read_result[index] = '\0';
+//    print_buf(flash_target_contents,index);
     return read_result;
+
+}
+
+static int get_key_until(absolute_time_t until) {
+    char current='m';
+    do {
+        int read = getKey();
+        if(read != 'm'){
+            current=read;
+        }
+        if (read == 'm' && current != 'm') {
+            return current;
+        }
+        if (time_reached(until)) {
+            return current;
+        }
+        busy_wait_us(1);
+    } while (true);
+
+}
+
+int get_key_timeout_us(uint32_t timeout_us) {
+
+    return get_key_until(make_timeout_time_us(timeout_us));
 
 }
