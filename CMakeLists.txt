@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-include(pico_sdk_import.cmake)
-include(example_auto_set_url.cmake)
-include($ENV{PICO_SDK_PATH}/tools/CMakeLists.txt)
+include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
 project(final_project C CXX ASM)
 set(CMAKE_C_STANDARD 11)
@@ -51,5 +49,5 @@ target_link_libraries(
     hardware_i2c
     pico_multicore
 )
-# example_auto_set_url(audio)
+
 pico_add_extra_outputs(digital_piano)
