@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
+#include "../st7735_driver/st7735_driver.h"
 
 #ifndef FINAL_PROJECT_GAME_MODE_H
 #define FINAL_PROJECT_GAME_MODE_H

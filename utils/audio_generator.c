@@ -4,7 +4,9 @@
 
 #include "audio_generator.h"
 #include "../zrx_543_driver/zrx543_driver.h"
+#include "../st7735_driver/st7735_driver.h"
 #include "sl_utils.h"
+
 
 
 void play_a_note(PIO pio, uint sm, uint32_t period, char c){
@@ -66,9 +68,8 @@ void play_a_note(PIO pio, uint sm, uint32_t period, char c){
 }
 
 void free_mode(PIO pio, uint sm){
+//    ST7735_Init();
 
-    // uint cycles=clock_get_hz(clk_sys)/(freq*clk_div);
-    printf("Entering Free Playing Mode!\n");
     uint clk_div = 0x04;
     uint32_t period = 64934;
 
@@ -80,7 +81,7 @@ void free_mode(PIO pio, uint sm){
     while(true){
 
         char c = get_key_timeout_us(4*1000*1000);
-        if(c == '#'){
+        if(c == '#' || c == '0'){
             pio_sm_set_clkdiv(pio,sm,1);
             break;
         }
