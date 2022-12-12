@@ -15,7 +15,7 @@ void record_music(int charArrLen){
     while(index < charArrLen - 1){
         char c = get_key_timeout_us(1*1000*250);
 
-        if(c == '#') {
+        if(c == '#' || c == '0') {
             printf("Quit the record.\n");
             break;
         }else if(c == 'm'){
@@ -40,14 +40,18 @@ void load_music(int charArrLen, PIO pio, uint sm, uint32_t period){
 //    printf("%s\n",charArr);
 
     // play the recorded music;
-    int index = 0;
-    while(index < charArrLen - 1) {
-        char c = charArr[index];
-        // play a note
-        if(charArr[index] == '\0') break;
+    while(true){
+        int index = 0;
+        while(index < charArrLen - 1) {
+            char c = charArr[index];
+            // play a note
+            if(charArr[index] == '\0') break;
 
-        play_a_note(pio, sm, period, c);
-        index++;
+            play_a_note(pio, sm, period, c);
+            index++;
+        }
+        printf("Replay the music successfully!\n");
+        if(get_key_timeout_us(2*1000*1000) == '#' || get_key_timeout_us(2*1000*1000)) return;
     }
-    printf("Replay the music successfully!\n");
+
 }
