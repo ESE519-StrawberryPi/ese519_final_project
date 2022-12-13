@@ -85,8 +85,64 @@ void free_mode(PIO pio, uint sm){
             pio_sm_set_clkdiv(pio,sm,1);
             break;
         }
+<<<<<<< Updated upstream
         if(c == 'm'){
             continue;
+=======
+
+//        printf("%c",c);
+
+        switch (c) {
+            case 'a':
+                pio_sm_set_clkdiv(pio,sm,(float)8.8125);
+                pio_pwm_set_period(pio, sm, 65476);
+                pio_pwm_set_level(pio,sm,period/2);
+                sleep_ms(100);
+                pio_pwm_set_level(pio,sm,0);
+                break;
+            case 's':
+                pio_sm_set_clkdiv(pio,sm,(float)6.5);
+                pio_pwm_set_period(pio, sm, 65485);
+                pio_pwm_set_level(pio,sm,period/2);
+                sleep_ms(100);
+                pio_pwm_set_level(pio,sm,0);
+                break;
+            case 'd':
+                pio_sm_set_clkdiv(pio,sm,(float)5.8125);
+                pio_pwm_set_period(pio, sm, 65239);
+                pio_pwm_set_level(pio,sm,period/2);
+                sleep_ms(100);
+                pio_pwm_set_level(pio,sm,0);
+                break;
+            case 'f':
+                pio_sm_set_clkdiv(pio,sm,(float)5.5);
+                pio_pwm_set_period(pio, sm, 65077);
+                pio_pwm_set_level(pio,sm,period/2);
+                sleep_ms(100);
+                pio_pwm_set_level(pio,sm,0);
+                break;
+            case 'g':
+                pio_sm_set_clkdiv(pio,sm,(float)4.875);
+                pio_pwm_set_period(pio, sm, 65409);
+                pio_pwm_set_level(pio,sm,period/2);
+                sleep_ms(100);
+                pio_pwm_set_level(pio,sm,0);
+                break;
+            case 'h':
+                pio_sm_set_clkdiv(pio,sm,(float)4.375);
+                pio_pwm_set_period(pio, sm, 64934);
+                pio_pwm_set_level(pio,sm,period/2);
+                sleep_ms(100);
+                pio_pwm_set_level(pio,sm,0);
+                break;
+            case 'j':
+                pio_sm_set_clkdiv(pio,sm,(float)3.875);
+                pio_pwm_set_period(pio, sm, 65314);
+                pio_pwm_set_level(pio,sm,period/2);
+                sleep_ms(100);
+                pio_pwm_set_level(pio,sm,0);
+                break;
+>>>>>>> Stashed changes
         }
         play_a_note(pio, sm, period, c);
     }
