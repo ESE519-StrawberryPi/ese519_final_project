@@ -63,14 +63,13 @@ void play_a_note(PIO pio, uint sm, uint32_t period, char c){
             sleep_ms(100);
             pio_pwm_set_level(pio,sm,0);
             break;
-        default: // including the '\n' and '\0'
+        default:
             sleep_ms(250);
             break;
     }
 }
 
 void free_mode(PIO pio, uint sm){
-//    ST7735_Init();
 
     uint clk_div = 0x04;
     uint32_t period = 64934;

@@ -89,13 +89,13 @@ int display_games(uint16_t *note_queue, int length) {
         int flag = 0; // 0: exist; 1:correct; 2: wrong;
 
         while(count < max_step_height + 1) {
-            printf("Count :%d\n",count);
+//            printf("Count :%d\n",count);
             sleep_ms(100);
             ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
             ST7735_FillRectangle(bar_x, bar_y,bar_width, bar_height, ST7735_WHITE);
             char key = get_key_timeout_us(250* 1000);
 //            int key = getchar_timeout_us(5*1000*1000);
-            printf("key: %c\n", key);
+//            printf("key: %c\n", key);
             // bottom-left position (index) of brick
             flag = judge(x_position_index, count, flag, key, speed);
 

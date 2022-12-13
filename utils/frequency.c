@@ -4,6 +4,8 @@
 
 #include "../config.h"
 
+/// Helper function to generate the clock divider for a given frequency
+/// \param freq Frequency of music notes
 void SetPwmFreq(float freq) {
 #define TOP_MAX 65534
 #define DIV_MAX ((0xFF << 4) + 0xF)

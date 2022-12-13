@@ -2,27 +2,18 @@
 // Created by Xuanbiao Zhu on 12/3/22.
 //
 
-//#include "config.h"
-
-//#include "utils/sl_utils.h"
-//#include "utils/pwm_utils.h"
 #include "utils/play.h"
 #include "utils/audio_generator.h"
-#include "zrx_543_driver/zrx543_driver.h"
 #include "utils/sl_utils.h"
 #include "utils/game_mode.h"
+#include "zrx_543_driver/zrx543_driver.h"
 
 #include "resources/audio.h"
-
-//#include "pico/stdio.h"
 
 
 int main(){
     stdio_init_all();
     sleep_ms(5000);
-//    ST7735_Init();
-//    init_gpio();
-    printf("Initialize GPIO\n");
 
     // Set up PIO
     PIO pio = pio0;
@@ -30,7 +21,6 @@ int main(){
     uint offset = pio_add_program(pio, &pwm_program);
     pwm_program_init(pio, sm, offset,AUDIO_PIN);
 
-    //
     uint32_t period = 64934;
     int recordedCharLen = 1000;
 
@@ -63,7 +53,7 @@ int main(){
                            ST7735_BLACK,ST7735_GREEN);
 
         c = get_key_timeout_us(wait_time[wait_time_index%2] * 1000*1000);
-//        printf("\n%c\n",c);
+
         if(c == '#' || c == '0'){
             ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
             ST7735_WriteString(x,y,"Bye ", Font_16x26,ST7735_BLACK,ST7735_GREEN);
@@ -71,14 +61,6 @@ int main(){
             ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
             break;
         }
-
-//        while(true){
-//            char cc = get_key_timeout_us(2 * 1000*1000);
-//            if(cc != '#'){
-//                cc = get_key_timeout_us(2 * 1000*1000);
-//                printf("testChar: %c\n",cc);
-//            }else break;
-//        }
 
         switch(c){
             case 'A':
@@ -137,11 +119,7 @@ int main(){
 
         }
         wait_time_index++;
-
-//        sleep_ms(1000);
-//        ST7735_FillRectangle(0, 0, 80, 160, ST7735_BLACK);
     }
-
 }
 
 
