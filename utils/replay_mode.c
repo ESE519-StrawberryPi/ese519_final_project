@@ -7,7 +7,8 @@
 #include "audio_generator.h"
 #include "../zrx_543_driver/zrx543_driver.h"
 
-void record_music(int charArrLen){
+void record_music(int charArrLen, PIO pio, uint sm){
+    uint32_t period = 64934;
     // record the music
     printf("Starting recording...\n");
     char *charArr = (char *) malloc(charArrLen * sizeof(char));
@@ -21,6 +22,7 @@ void record_music(int charArrLen){
         }else if(c == 'm'){
             charArr[index] = 'm';
         }else{
+            play_a_note(pio,sm,period,c);
             charArr[index] = c;
         }
         index++;
@@ -46,12 +48,13 @@ void load_music(int charArrLen, PIO pio, uint sm, uint32_t period){
             char c = charArr[index];
             // play a note
             if(charArr[index] == '\0') break;
-
-            play_a_note(pio, sm, period, c);
+//            printf("%c\n",c);
+            if (c != 'm') play_a_note(pio, sm, period, c);
+            sleep_ms(90);
             index++;
         }
         printf("Replay the music successfully!\n");
-        if(get_key_timeout_us(2*1000*1000) == '#' || get_key_timeout_us(2*1000*1000)) return;
+        if(get_key_timeout_us(2*1000*1000) == '#' || get_key_timeout_us(2*1000*1000) == '0') return;
     }
 
 }

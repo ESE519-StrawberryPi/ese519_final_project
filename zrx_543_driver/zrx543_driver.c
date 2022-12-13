@@ -2,8 +2,6 @@
 // Created by Haoze Wu on 12/9/22.
 //
 
-#include "pico/stdlib.h"
-
 #include "zrx543_driver.h"
 
 // Define the Row GPIO PIN

@@ -4,11 +4,10 @@
 
 #include "game_mode.h"
 
-
-#include <pico/stdlib.h>
 #include "sl_utils.h"
-#include "../zrx_543_driver/zrx543_driver.h"
 #include "play.h"
+#include "../zrx_543_driver/zrx543_driver.h"
+
 
 const uint16_t width = 80;
 const uint16_t height = 160;
@@ -129,17 +128,6 @@ int display_games(uint16_t *note_queue, int length) {
     return score;
 
 }
-
-void show(int y){
-    int x = 0;
-    ST7735_WriteString(x, y,"A:Record",Font_7x10,ST7735_BLACK,ST7735_GREEN);
-    ST7735_WriteString(x,y+10,"B:Play",Font_7x10,ST7735_BLACK,ST7735_GREEN);
-    ST7735_WriteString(x,y+20,"C:Free Mode",Font_7x10,ST7735_BLACK,ST7735_GREEN);
-    ST7735_WriteString(x,y+30,"D:Load",Font_7x10,ST7735_BLACK,ST7735_GREEN);
-    ST7735_WriteString(x,y+40,"#:Quit",Font_7x10,ST7735_BLACK,ST7735_GREEN);
-
-}
-
 
 void game_mode_test(){
 

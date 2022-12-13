@@ -93,7 +93,7 @@ char* load(char *read_result){
     while(flash_target_contents[index] != '\0'){
         index++;
     }
-    printf("\nindex: %d\n", index);
+//    printf("\nindex: %d\n", index);
     read_result = (char *) malloc(index + 1);
     for(int i = 0; i < index; i++){
         read_result[i] = flash_target_contents[i];

@@ -5,9 +5,6 @@
 #ifndef FINAL_PROJECT_AUDIO_GENERATOR_H
 #define FINAL_PROJECT_AUDIO_GENERATOR_H
 
-
-#include "../config.h"
-
 #include "pwm_utils.h"
 
 void free_mode(PIO pio, uint sm);

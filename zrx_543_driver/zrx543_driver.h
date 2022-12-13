@@ -3,6 +3,8 @@
 //
 
 #include <stdio.h>
+#include "pico/stdlib.h"
+
 #ifndef FINAL_PROJECT_ZRX543_DRIVER_H
 #define FINAL_PROJECT_ZRX543_DRIVER_H
 

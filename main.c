@@ -89,7 +89,7 @@ int main(){
                                    ST7735_BLACK,ST7735_GREEN);
                 ST7735_WriteString(5,40 + 20,"to end  ",Font_7x10,
                                    ST7735_BLACK,ST7735_GREEN);
-                record_music(recordedCharLen);
+                record_music(recordedCharLen,pio,sm);
                 break;
 
             case 'B':
