@@ -92,8 +92,6 @@ Our device has four main functions: the Free Mode function, Predefined Play Func
 
 ### Keypad Driver
 
-[ese519_final_project/zrx_543_driver at main · TomGoh/ese519_final_project](https://github.com/TomGoh/ese519_final_project/tree/main/zrx_543_driver)
-
 The keypad in this project is ZRX-543. The theory behind the hardware of the keypad is the method used to identify which key is pressed. ZRX-543 keypad has eight pins, among which four pins are responsible for the four rows, and the rest four pins are responsible for the four columns of the keypad.  All eight pins are attached to 8 different GPIO pins on the RP2040 chip. To identify which key is pressed by the player, we first set all 4 GPIO corresponding to those pins responsible for the four rows on the keypad one by one. Once a GPIO pin responsible for a row is set to be high, the driver checks each GPIO pin responsible for the four columns. The index of the column, which is detected to be high in voltage, along with the index of the row, which is set to be high, would be used to identify the key pressed. For example, when the first row is set high, and the third column is detected to be high in voltage, that means key three is pressed since key three is at the intersection of the first row and the third column. Checking all four columns is done after setting the GPIO of the row to be high. This is polling in the hardware.
 
 ### Input Function
