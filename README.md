@@ -1,4 +1,5 @@
-# Final Project Report
+# ESE 519 Group Strawberry 🍑 
+## Final Project Report
 
 - Overview
 - Design and Diagram
