@@ -56,6 +56,8 @@ We use a capacitor to realize a low-pass filter to filter out the PWM signal's h
 
 Here is the Design graph of the whole circuit.
 
+![WechatIMG803](resources/WechatIMG803.png)
+
 ## Technical Point Highlight
 
 After designing all functions and basically deciding the hardware composition of our project, some fundamental techniques would be used to realize all these designs and proposals into reality functions and codes.
