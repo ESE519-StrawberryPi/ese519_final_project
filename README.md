@@ -1,4 +1,4 @@
-# ESE 519 Group Strawberry 🍑 
+# ESE 519 Group Strawberry Pi 🍑 
 ## Final Project Report
 
 - Overview
